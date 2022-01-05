@@ -23,13 +23,15 @@ class GetvideosSpiderSpider(scrapy.Spider):
             "URL" : "www.youtube.com" + ListWithVideosInfo[index]["videoRenderer"]["navigationEndpoint"]["commandMetadata"]["webCommandMetadata"]["url"]
             })
             videoNumber += 1
+        print(videosInfo)
         
-        videosInfoJson = json.dumps(videosInfo, indent=4)
+        #videosInfoJson = json.dumps(videosInfo, indent=4)
+        #print(videosInfoJson)
 
         #<<<<IF YOU WANT SAVE A FILE AT THE END>>>
-        page = response.url.split("/")[-2]
-        filename = "ytvideos_Info_Result.json"
-        with open(filename, 'w') as f:
-            f.write(videosInfoJson)
-        self.log(f'Saved file {filename}')
-        print(videosInfoJson)
+        #page = response.url.split("/")[-2]
+        #filename = "ytvideos_Info_Result.json"
+        #with open(filename, 'w') as f:
+        #    f.write(videosInfoJson)
+        #self.log(f'Saved file {filename}')
+        

@@ -6,7 +6,7 @@ from airflow.operators.python import PythonOperator
 from airflow.operators.python_operator import BranchPythonOperator
 from airflow.operators.dummy_operator import DummyOperator
 
-from tasks.go_spider import main
+from __main__ import main
 
 default_args = {
 'owner'                 : 'airflow',
@@ -19,6 +19,8 @@ default_args = {
 'retry_delay'           : timedelta(minutes=5)
 }
 
+getvideo_scraper = '/opt/airflow/dags/tasks'
+
 with DAG('go_spider_operator_dag', default_args=default_args, schedule_interval='*/5 * * * *', catchup=False) as dag:
     start_dag = DummyOperator(
         task_id='start_dag'
@@ -29,30 +31,9 @@ with DAG('go_spider_operator_dag', default_args=default_args, schedule_interval=
         )        
 
     t1 = BashOperator(
-        task_id='move_to_directory',
-        bash_command='cd /opt/airflow/dags/tasks',
+    task_id='scrape_yt_videos',
+    bash_command='cd {} && scrapy crawl getvideos-spider'.format(getvideo_scraper),
     )
-    
-    t2 = BashOperator(
-        task_id='go_spider_command',
-        bash_command='python go_spider.py',
-    )
-    
-    #t2 = PythonOperator(
-    #    task_id='spider-go',
-    #    python_callable=main
-    #    )
-    
-    #t1 = DockerOperator(
-    #    task_id='docker_command_go_spider',
-    #    image='go_spider_image',
-    #    container_name='go_spider_image',
-    #    api_version='auto',
-    #    auto_remove=True,
-    #    command="echo done",
-    #    docker_url="unix://var/run/docker.sock",
-    #    network_mode="bridge"
-    #    )
         
     start_dag >> t1 
 
