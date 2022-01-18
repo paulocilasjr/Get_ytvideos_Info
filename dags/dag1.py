@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
-from airflow.operators.docker_operator import DockerOperator
-from airflow.operators.python import PythonOperator
-from airflow.operators.python_operator import BranchPythonOperator
+#from airflow.operators.docker_operator import DockerOperator
+#from airflow.operators.python import PythonOperator
+#from airflow.operators.python_operator import BranchPythonOperator
 from airflow.operators.dummy_operator import DummyOperator
 
 from __main__ import main
