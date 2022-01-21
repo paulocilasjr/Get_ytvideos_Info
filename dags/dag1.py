@@ -32,7 +32,7 @@ with DAG('go_spider_operator_dag', default_args=default_args, schedule_interval=
 
     t1 = BashOperator(
     task_id='scrape_yt_videos',
-    bash_command='cd {} && scrapy crawl getvideos-spider'.format(getvideo_scraper),
+    bash_command='cd {} && python3 go_spider.py'.format(getvideo_scraper),
     )
         
     start_dag >> t1 
