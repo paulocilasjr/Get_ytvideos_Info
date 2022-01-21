@@ -17,15 +17,19 @@ class GetvideosSpiderSpider(scrapy.Spider):
         ListWithVideosInfo = allDataDict["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"]
         
         videoNumber = 1
-        videosInfo = {}
+        videosArray = []
+        videosDict = {"Videos": videosArray}
+        
         for index in range(len(ListWithVideosInfo)):
-            videosInfo["Video %d"%videoNumber] = {
-                "Title" : ListWithVideosInfo[index]["videoRenderer"]["title"]["runs"][0]["text"],
-                "URL" : "www.youtube.com" + ListWithVideosInfo[index]["videoRenderer"]["navigationEndpoint"]["commandMetadata"]["webCommandMetadata"]["url"]   
+            videoInfo = {
+                "ID": videoNumber,
+                "Title": ListWithVideosInfo[index]["videoRenderer"]["title"]["runs"][0]["text"],
+                "URL" : "www.youtube.com" + ListWithVideosInfo[index]["videoRenderer"]["navigationEndpoint"]["commandMetadata"]["webCommandMetadata"]["url"]
             }
             videoNumber += 1
+            videosArray.append(videoInfo)
         
-        videosInfoJson = json.dumps(videosInfo, indent=4, ensure_ascii=False)
+        videosInfoJson = json.dumps(videosDict, indent=4, ensure_ascii=False)
         print(videosInfoJson)
 
         #<<<<IF YOU WANT SAVE A FILE AT THE END>>>
