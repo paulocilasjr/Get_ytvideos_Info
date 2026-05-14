@@ -1,3 +1,6 @@
-FROM apache/airflow:2.2.3
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+FROM apache/airflow:3.2.1-python3.12
+
+COPY pyproject.toml README.md ./
+COPY src ./src
+
+RUN pip install --no-cache-dir .

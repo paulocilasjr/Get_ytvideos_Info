@@ -1,0 +1,30 @@
+[project]
+name = "ytvideos-info"
+version = "0.1.0"
+description = "Export YouTube search result video metadata to JSON."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.13,<3",
+    "yt-dlp>=2026.3.17,<2027",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.15.12,<0.16",
+]
+
+[project.scripts]
+ytvideos-info = "ytvideos_info.cli:main"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests", "dags"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "PL"]
+ignore = ["PLR2004"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["PLR2004"]
